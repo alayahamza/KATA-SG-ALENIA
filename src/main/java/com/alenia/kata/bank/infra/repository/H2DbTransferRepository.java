@@ -11,7 +11,7 @@ import java.util.UUID;
 @Component
 public class H2DbTransferRepository implements TransferRepository {
 
-    private final SpringDataTransferRepository springDataTransferRepository;
+    private SpringDataTransferRepository springDataTransferRepository;
 
     @Autowired
     public H2DbTransferRepository(SpringDataTransferRepository springDataTransferRepository) {

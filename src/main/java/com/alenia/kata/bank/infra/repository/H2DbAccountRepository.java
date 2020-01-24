@@ -12,7 +12,7 @@ import java.util.UUID;
 @Component
 public class H2DbAccountRepository implements AccountRepository {
 
-    private final SpringDataAccountRepository springDataAccountRepository;
+    private SpringDataAccountRepository springDataAccountRepository;
 
     @Autowired
     public H2DbAccountRepository(SpringDataAccountRepository springDataAccountRepository) {

@@ -2,10 +2,14 @@ package com.alenia.kata.bank.infra.configuration;
 
 import com.alenia.kata.bank.domain.repository.AccountRepository;
 import com.alenia.kata.bank.domain.repository.TransferRepository;
-import com.alenia.kata.bank.domain.service.AccountService;
-import com.alenia.kata.bank.domain.service.AccountServiceImpl;
-import com.alenia.kata.bank.domain.service.OperationService;
-import com.alenia.kata.bank.domain.service.OperationServiceImpl;
+import com.alenia.kata.bank.domain.service.command.AccountCommandService;
+import com.alenia.kata.bank.domain.service.command.AccountCommandServiceImpl;
+import com.alenia.kata.bank.domain.service.command.OperationCommandService;
+import com.alenia.kata.bank.domain.service.command.OperationCommandServiceImpl;
+import com.alenia.kata.bank.domain.service.query.AccountQueryService;
+import com.alenia.kata.bank.domain.service.query.AccountQueryServiceImpl;
+import com.alenia.kata.bank.domain.service.query.OperationQueryService;
+import com.alenia.kata.bank.domain.service.query.OperationQueryServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,12 +17,22 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    AccountService accountService(AccountRepository accountRepository) {
-        return new AccountServiceImpl(accountRepository);
+    AccountQueryService accountQueryService(AccountRepository accountRepository) {
+        return new AccountQueryServiceImpl(accountRepository);
     }
 
     @Bean
-    OperationService operationService(AccountService accountService, TransferRepository transferRepository) {
-        return new OperationServiceImpl(accountService, transferRepository);
+    AccountCommandService accountCommandService(AccountRepository accountRepository, AccountQueryService accountQueryService) {
+        return new AccountCommandServiceImpl(accountRepository, accountQueryService);
+    }
+
+    @Bean
+    OperationCommandService operationCommandService(AccountCommandService accountCommandService, TransferRepository transferRepository) {
+        return new OperationCommandServiceImpl(accountCommandService, transferRepository);
+    }
+
+    @Bean
+    OperationQueryService operationQueryService(TransferRepository transferRepository) {
+        return new OperationQueryServiceImpl(transferRepository);
     }
 }

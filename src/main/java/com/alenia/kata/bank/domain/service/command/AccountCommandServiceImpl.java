@@ -1,22 +1,23 @@
-package com.alenia.kata.bank.domain.service;
+package com.alenia.kata.bank.domain.service.command;
 
 import com.alenia.kata.bank.domain.BankConstants;
 import com.alenia.kata.bank.domain.BankException;
 import com.alenia.kata.bank.domain.entity.Account;
 import com.alenia.kata.bank.domain.repository.AccountRepository;
+import com.alenia.kata.bank.domain.service.query.AccountQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
-public class AccountServiceImpl implements AccountService {
+public class AccountCommandServiceImpl implements AccountCommandService {
 
-    private final AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+    private AccountQueryService accountQueryService;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountCommandServiceImpl(AccountRepository accountRepository, AccountQueryService accountQueryService) {
         this.accountRepository = accountRepository;
+        this.accountQueryService = accountQueryService;
     }
 
     @Override
@@ -27,20 +28,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account findById(UUID accountId) throws BankException {
-        Objects.requireNonNull(accountId);
-        return accountRepository.findById(accountId)
-                .orElseThrow(() -> new BankException(BankConstants.ACCOUNT_NOT_FOUND));
-    }
-
-    @Override
-    public List<Account> findAll() {
-        return accountRepository.findAll();
-    }
-
-    @Override
     public Account withdraw(UUID accountId, Double amount) throws BankException {
-        Account account = findById(accountId);
+        Account account = accountQueryService.findById(accountId);
         Double accountBalance = account.getBalance();
         double newBalance = accountBalance - amount;
         if (newBalance >= BankConstants.ACCOUNT_MIN_BALANCE) {
@@ -54,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account deposit(UUID accountId, Double amount) throws BankException {
-        Account account = findById(accountId);
+        Account account = accountQueryService.findById(accountId);
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
         return account;
