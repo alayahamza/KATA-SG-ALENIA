@@ -24,7 +24,7 @@ public class AccountWriteController {
         this.accountCommandService = accountCommandService;
     }
 
-    @PutMapping()
+    @PutMapping
     public void createAccount(@RequestBody AccountRequest accountRequest) {
         accountCommandService.create(accountRequest.getBalance());
     }

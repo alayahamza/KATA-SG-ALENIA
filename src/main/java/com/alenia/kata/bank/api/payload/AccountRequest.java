@@ -1,14 +1,10 @@
 package com.alenia.kata.bank.api.payload;
 
+import lombok.Data;
+
+@Data
 public class AccountRequest {
 
     private Double balance;
 
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
 }

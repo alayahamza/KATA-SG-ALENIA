@@ -1,5 +1,7 @@
 package com.alenia.kata.bank.domain.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,7 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 @MappedSuperclass
+@Data
 public class Operation {
 
     @Column(name = "date")
@@ -29,27 +32,4 @@ public class Operation {
         this.date = new GregorianCalendar();
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
 }

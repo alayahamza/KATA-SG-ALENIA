@@ -32,7 +32,7 @@ public class AccountReadController {
         return ResponseEntity.ok(accountMapper.toAccountResponse(accountQueryService.findById(accountId)));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<AccountResponse>> findAll() {
         return ResponseEntity.ok(accountMapper.toAccountsResponse(accountQueryService.findAll()));
     }

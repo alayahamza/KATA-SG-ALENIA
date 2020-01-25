@@ -1,5 +1,7 @@
 package com.alenia.kata.bank.domain.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
+@Data
 public class Account {
 
     @Id
@@ -17,20 +20,4 @@ public class Account {
 
     @Column(name = "BALANCE")
     private Double balance;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
 }

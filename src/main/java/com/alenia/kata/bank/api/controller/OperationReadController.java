@@ -32,17 +32,17 @@ public class OperationReadController {
     }
 
     @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<TransferResponse>> findTransactionsByAccountId(@PathVariable UUID accountId) {
+    public ResponseEntity<List<TransferResponse>> findTransfersByAccountId(@PathVariable UUID accountId) {
         return ResponseEntity.ok(operationMapper.toTransfersResponse(operationQueryService.findByPayerOrPayee(accountId)));
     }
 
     @GetMapping("/payer/{payerId}")
-    public ResponseEntity<List<TransferResponse>> findTransactionsByPayerId(@PathVariable UUID payerId) {
+    public ResponseEntity<List<TransferResponse>> findTransfersByPayerId(@PathVariable UUID payerId) {
         return ResponseEntity.ok(operationMapper.toTransfersResponse(operationQueryService.findByPayer(payerId)));
     }
 
     @GetMapping("/payee/{payeeId}")
-    public ResponseEntity<List<TransferResponse>> findTransactionsByPayeeId(@PathVariable UUID payeeId) {
+    public ResponseEntity<List<TransferResponse>> findTransfersByPayeeId(@PathVariable UUID payeeId) {
         return ResponseEntity.ok(operationMapper.toTransfersResponse(operationQueryService.findByPayee(payeeId)));
     }
 
